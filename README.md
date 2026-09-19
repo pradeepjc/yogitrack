@@ -4,7 +4,7 @@ Phase 1 (in progress): Manager & Instructor record-keeping for Yoga H'om studio.
 Implemented so far: **UC1 (Add Instructor)** and **UC2 (Add Class)**. Packages, customers, sales, attendance, and reports are planned but not yet built.
 
 ## Stack
-MongoDB + Express + React (Vite) + Node, JWT-based role auth (Manager / Instructor).
+MongoDB + Express + React (Vite) + Node, JWT-based auth (Manager role only for now).
 
 ## Setup
 
@@ -62,6 +62,15 @@ This deploys as a **single Heroku app**: the Express backend serves both the API
 5. Visit `heroku open` and log in with the manager credentials you set in step 2.
 
 ### Redeploying after changes
+If the app is connected to GitHub with automatic deploys enabled (Heroku dashboard → app → Deploy tab), pushing to GitHub is all that's needed:
+```
+git add -A
+git commit -m "..."
+git push origin main
+```
+Heroku picks up the push via webhook and rebuilds/redeploys automatically.
+
+If you're deploying via the `heroku` git remote directly instead (no GitHub connection):
 ```
 git add -A
 git commit -m "..."
