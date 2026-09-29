@@ -1,7 +1,7 @@
 # YogiTrack
 
 Phase 1 (in progress): Manager & Instructor record-keeping for Yoga H'om studio.
-Implemented so far: **UC1 (Add Instructor)** and **UC2 (Add Class)**. Packages, customers, sales, attendance, and reports are planned but not yet built.
+Implemented so far: **UC1 (Add Instructor)**, **UC2 (Add Class)**, and **UC3 (Add Package)**. Customers, sales, attendance, and reports are planned but not yet built.
 
 ## Stack
 MongoDB + Express + React (Vite) + Node, JWT-based auth (Manager role only for now).

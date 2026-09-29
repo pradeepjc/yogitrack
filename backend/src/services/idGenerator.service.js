@@ -17,4 +17,8 @@ async function generateInstructorId() {
   return 'I' + pad(await getNextSequence('instructor'), 5);
 }
 
-module.exports = { getNextSequence, generateInstructorId };
+async function generatePackageId() {
+  return 'PKG' + pad(await getNextSequence('package'), 5);
+}
+
+module.exports = { getNextSequence, generateInstructorId, generatePackageId };

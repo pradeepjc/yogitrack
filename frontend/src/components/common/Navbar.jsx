@@ -11,6 +11,7 @@ export default function Navbar() {
         <div className="navbar-links">
           <NavLink to="/manager/instructors">Instructors</NavLink>
           <NavLink to="/manager/classes">Classes</NavLink>
+          <NavLink to="/manager/packages">Packages</NavLink>
         </div>
       )}
       <div className="navbar-user">
