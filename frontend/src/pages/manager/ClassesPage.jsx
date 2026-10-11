@@ -22,7 +22,7 @@ const COLUMNS = [
   { key: 'dayOfWeek', header: 'Day' },
   { key: 'time', header: 'Time', render: (row) => formatTimeRange(row.time, row.durationMinutes) },
   { key: 'classType', header: 'Type' },
-  { key: 'payRate', header: 'Pay Rate' },
+  { key: 'payRate', header: 'Pay Rate', render: (row) => `$${Number(row.payRate).toFixed(2)}` },
 ];
 
 export default function ClassesPage() {
