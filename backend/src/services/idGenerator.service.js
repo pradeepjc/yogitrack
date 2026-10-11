@@ -17,8 +17,12 @@ async function generateInstructorId() {
   return 'I' + pad(await getNextSequence('instructor'), 5);
 }
 
+async function generateCustomerId() {
+  return 'C' + pad(await getNextSequence('customer'), 5);
+}
+
 async function generatePackageId() {
   return 'PKG' + pad(await getNextSequence('package'), 5);
 }
 
-module.exports = { getNextSequence, generateInstructorId, generatePackageId };
+module.exports = { getNextSequence, generateInstructorId, generateCustomerId, generatePackageId };

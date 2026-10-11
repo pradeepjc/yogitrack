@@ -7,6 +7,7 @@ import ManagerLayout from './pages/manager/ManagerLayout';
 import InstructorsPage from './pages/manager/InstructorsPage';
 import ClassesPage from './pages/manager/ClassesPage';
 import PackagesPage from './pages/manager/PackagesPage';
+import CustomersPage from './pages/manager/CustomersPage';
 
 function HomeRedirect() {
   const { user } = useAuth();
@@ -27,6 +28,7 @@ export default function AppRouter() {
             <Route path="instructors" element={<InstructorsPage />} />
             <Route path="classes" element={<ClassesPage />} />
             <Route path="packages" element={<PackagesPage />} />
+            <Route path="customers" element={<CustomersPage />} />
           </Route>
         </Route>
       </Route>

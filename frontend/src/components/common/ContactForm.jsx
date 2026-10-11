@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import FormField from '../common/FormField';
+import FormField from './FormField';
 import { isValidEmail, isValidPhone } from '../../utils/validators';
 
 const EMPTY_FORM = {
@@ -27,7 +27,7 @@ function validate(form) {
   return errors;
 }
 
-export default function InstructorForm({ initialValues, onSubmit, submitLabel = 'Save Instructor' }) {
+export default function ContactForm({ initialValues, onSubmit, submitLabel = 'Save' }) {
   const [form, setForm] = useState(initialValues || EMPTY_FORM);
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import ContactForm from '../../components/common/ContactForm';
 import DataTable from '../../components/common/DataTable';
 import DuplicateNameDialog from '../../components/common/DuplicateNameDialog';
-import InstructorForm from '../../components/instructors/InstructorForm';
 import { checkDuplicateInstructor, createInstructor, listInstructors } from '../../api/instructors.api';
 
 const COLUMNS = [
@@ -59,7 +59,7 @@ export default function InstructorsPage() {
 
       {successMessage && <p className="success-message">{successMessage}</p>}
 
-      {showForm && <InstructorForm onSubmit={handleSubmit} />}
+      {showForm && <ContactForm onSubmit={handleSubmit} submitLabel="Save Instructor" />}
 
       {duplicateMatches && (
         <DuplicateNameDialog

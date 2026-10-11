@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 
 const notificationSchema = new mongoose.Schema(
   {
-    recipientModel: { type: String, enum: ['Instructor', 'User'], required: true },
+    recipientModel: { type: String, enum: ['Instructor', 'Customer', 'User'], required: true },
     recipientRef: { type: mongoose.Schema.Types.ObjectId, refPath: 'recipientModel', required: true },
     channel: { type: String, enum: ['email', 'phone'], required: true },
     messageBody: { type: String, required: true },
     relatedEntityType: {
       type: String,
-      enum: ['Instructor', 'ClassSchedule'],
+      enum: ['Instructor', 'Customer', 'ClassSchedule'],
     },
     relatedEntityId: { type: mongoose.Schema.Types.ObjectId },
     status: { type: String, enum: ['sent'], default: 'sent' },
