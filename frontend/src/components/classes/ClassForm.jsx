@@ -3,10 +3,10 @@ import FormField from '../common/FormField';
 
 const EMPTY_FORM = { instructorId: '', dayOfWeek: '', time: '', classType: '', payRate: '' };
 
-const DAY_OPTIONS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((d) => ({ value: d, label: d }));
+const DAY_OPTIONS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => ({ value: d, label: d }));
 
-export default function ClassForm({ instructors, onSubmit, externalError }) {
-  const [form, setForm] = useState(EMPTY_FORM);
+export default function ClassForm({ instructors, initialValues, onSubmit, submitLabel = 'Publish Class', externalError }) {
+  const [form, setForm] = useState(initialValues || EMPTY_FORM);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -77,7 +77,7 @@ export default function ClassForm({ instructors, onSubmit, externalError }) {
         />
       </div>
       <button type="submit" className="btn btn-primary" disabled={submitting}>
-        {submitting ? 'Publishing...' : 'Publish Class'}
+        {submitting ? 'Saving...' : submitLabel}
       </button>
     </form>
   );

@@ -11,6 +11,11 @@ const EMPTY_FORM = {
   preferredContact: '',
 };
 
+// Keeps only the form's own fields when editing an existing record.
+function toFormValues(record) {
+  return Object.fromEntries(Object.keys(EMPTY_FORM).map((name) => [name, record[name] ?? '']));
+}
+
 function validate(form) {
   const errors = {};
   Object.keys(EMPTY_FORM).forEach((name) => {
@@ -28,7 +33,7 @@ function validate(form) {
 }
 
 export default function ContactForm({ initialValues, onSubmit, submitLabel = 'Save' }) {
-  const [form, setForm] = useState(initialValues || EMPTY_FORM);
+  const [form, setForm] = useState(() => (initialValues ? toFormValues(initialValues) : EMPTY_FORM));
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);

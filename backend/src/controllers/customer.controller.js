@@ -77,4 +77,39 @@ const listCustomers = asyncHandler(async (req, res) => {
   res.json(customers);
 });
 
-module.exports = { checkDuplicate, createCustomer, listCustomers };
+const updateCustomer = asyncHandler(async (req, res) => {
+  validateRequiredFields(req.body);
+  validateContactFields(req.body);
+
+  const { firstName, lastName, address, phone, email, preferredContact } = req.body;
+
+  // classBalance is deliberately not editable here; only sales and attendance change it.
+  const customer = await Customer.findOneAndUpdate(
+    { _id: req.params.id, isActive: true },
+    {
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      address,
+      phone: String(phone).trim(),
+      email: email.toLowerCase().trim(),
+      preferredContact,
+    },
+    { new: true, runValidators: true }
+  );
+
+  if (!customer) {
+    throw new ApiError(404, 'Customer not found');
+  }
+
+  res.json(customer);
+});
+
+const deactivateCustomer = asyncHandler(async (req, res) => {
+  const customer = await Customer.findByIdAndUpdate(req.params.id, { isActive: false }, { new: true });
+  if (!customer) {
+    throw new ApiError(404, 'Customer not found');
+  }
+  res.json(customer);
+});
+
+module.exports = { checkDuplicate, createCustomer, listCustomers, updateCustomer, deactivateCustomer };

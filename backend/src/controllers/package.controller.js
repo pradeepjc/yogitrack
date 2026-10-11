@@ -28,25 +28,26 @@ function parseNumberOfClasses(value) {
   return { isUnlimited: false, numberOfClasses: count };
 }
 
-const createPackage = asyncHandler(async (req, res) => {
-  validateRequiredFields(req.body);
+// Validates a create/update payload and returns the fields to store.
+function parsePackageInput(body) {
+  validateRequiredFields(body);
 
-  const { name, category, classType } = req.body;
+  const { name, category, classType } = body;
   if (!CATEGORIES.includes(category)) {
     throw new ApiError(400, 'Category must be General or Senior');
   }
   if (!CLASS_TYPES.includes(classType)) {
     throw new ApiError(400, 'Class type must be General or Special');
   }
-  const { isUnlimited, numberOfClasses } = parseNumberOfClasses(req.body.numberOfClasses);
+  const { isUnlimited, numberOfClasses } = parseNumberOfClasses(body.numberOfClasses);
 
-  const price = Number(req.body.price);
+  const price = Number(body.price);
   if (Number.isNaN(price) || price < 0) {
     throw new ApiError(400, 'Price must be a non-negative number');
   }
 
-  const startDate = new Date(req.body.startDate);
-  const endDate = new Date(req.body.endDate);
+  const startDate = new Date(body.startDate);
+  const endDate = new Date(body.endDate);
   if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) {
     throw new ApiError(400, 'Start and end dates must be valid dates');
   }
@@ -54,19 +55,15 @@ const createPackage = asyncHandler(async (req, res) => {
     throw new ApiError(400, 'End date cannot be before start date');
   }
 
+  return { name: name.trim(), category, isUnlimited, numberOfClasses, classType, startDate, endDate, price };
+}
+
+const createPackage = asyncHandler(async (req, res) => {
+  const fields = parsePackageInput(req.body);
+
   const packageId = await generatePackageId();
 
-  const pkg = await Package.create({
-    packageId,
-    name: name.trim(),
-    category,
-    isUnlimited,
-    numberOfClasses,
-    classType,
-    startDate,
-    endDate,
-    price,
-  });
+  const pkg = await Package.create({ packageId, ...fields });
 
   res.status(201).json(pkg);
 });
@@ -76,4 +73,27 @@ const listPackages = asyncHandler(async (req, res) => {
   res.json(packages);
 });
 
-module.exports = { createPackage, listPackages };
+// Past sales keep their own price, class type and dates, so edits here never rewrite them.
+const updatePackage = asyncHandler(async (req, res) => {
+  const fields = parsePackageInput(req.body);
+
+  const pkg = await Package.findOneAndUpdate({ _id: req.params.id, isActive: true }, fields, {
+    new: true,
+    runValidators: true,
+  });
+  if (!pkg) {
+    throw new ApiError(404, 'Package not found');
+  }
+
+  res.json(pkg);
+});
+
+const deactivatePackage = asyncHandler(async (req, res) => {
+  const pkg = await Package.findByIdAndUpdate(req.params.id, { isActive: false }, { new: true });
+  if (!pkg) {
+    throw new ApiError(404, 'Package not found');
+  }
+  res.json(pkg);
+});
+
+module.exports = { createPackage, listPackages, updatePackage, deactivatePackage };

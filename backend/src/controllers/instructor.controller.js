@@ -122,7 +122,7 @@ const deactivateInstructor = asyncHandler(async (req, res) => {
     isActive: true,
   });
   if (activeClassCount > 0) {
-    throw new ApiError(409, 'Cannot deactivate an instructor with active classes');
+    throw new ApiError(409, 'This instructor still has active classes. Delete or reassign those classes first.');
   }
 
   const instructor = await Instructor.findByIdAndUpdate(
