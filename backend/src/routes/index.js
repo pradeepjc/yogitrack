@@ -4,6 +4,7 @@ const instructorRoutes = require('./instructor.routes');
 const classRoutes = require('./class.routes');
 const packageRoutes = require('./package.routes');
 const customerRoutes = require('./customer.routes');
+const saleRoutes = require('./sale.routes');
 
 const router = express.Router();
 
@@ -13,5 +14,6 @@ router.use('/instructors', instructorRoutes);
 router.use('/classes', classRoutes);
 router.use('/packages', packageRoutes);
 router.use('/customers', customerRoutes);
+router.use('/sales', saleRoutes);
 
 module.exports = router;

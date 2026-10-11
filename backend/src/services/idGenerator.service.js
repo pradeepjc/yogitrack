@@ -25,4 +25,14 @@ async function generatePackageId() {
   return 'PKG' + pad(await getNextSequence('package'), 5);
 }
 
-module.exports = { getNextSequence, generateInstructorId, generateCustomerId, generatePackageId };
+async function generateSaleId() {
+  return 'S' + pad(await getNextSequence('sale'), 5);
+}
+
+module.exports = {
+  getNextSequence,
+  generateInstructorId,
+  generateCustomerId,
+  generatePackageId,
+  generateSaleId,
+};

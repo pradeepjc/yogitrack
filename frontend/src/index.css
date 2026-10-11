@@ -186,6 +186,12 @@ body {
   margin-bottom: 16px;
 }
 
+.form-summary {
+  margin: 0 0 16px;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
 .form-field {
   display: flex;
   flex-direction: column;

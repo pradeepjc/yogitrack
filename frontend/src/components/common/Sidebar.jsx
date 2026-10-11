@@ -14,6 +14,7 @@ export default function Sidebar() {
       <NavLink to="/manager/classes">Classes</NavLink>
       <NavLink to="/manager/packages">Packages</NavLink>
       <NavLink to="/manager/customers">Customers</NavLink>
+      <NavLink to="/manager/sales">Sales</NavLink>
     </aside>
   );
 }
