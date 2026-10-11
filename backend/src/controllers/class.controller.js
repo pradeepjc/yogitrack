@@ -10,6 +10,9 @@ const {
 } = require('../services/scheduleConflict.service');
 const { sendNotification } = require('../services/notification.service');
 
+// Display order for the schedule: Sunday through Saturday.
+const WEEK_ORDER = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
 function validateClassInput(body) {
   const { instructorId, dayOfWeek, time, classType, payRate } = body;
   if (!instructorId || !dayOfWeek || !time || !classType || payRate === undefined || payRate === null) {
@@ -101,9 +104,12 @@ const listClasses = asyncHandler(async (req, res) => {
     const instructor = await Instructor.findOne({ instructorId });
     filter.instructor = instructor ? instructor._id : null;
   }
-  const classes = await ClassSchedule.find(filter)
-    .populate('instructor', 'instructorId firstName lastName')
-    .sort({ dayOfWeek: 1, time: 1 });
+  const classes = await ClassSchedule.find(filter).populate('instructor', 'instructorId firstName lastName');
+  // Day names don't sort in week order alphabetically, so order them here.
+  classes.sort(
+    (a, b) =>
+      WEEK_ORDER.indexOf(a.dayOfWeek) - WEEK_ORDER.indexOf(b.dayOfWeek) || a.time.localeCompare(b.time)
+  );
   res.json(classes);
 });
 
