@@ -1,20 +1,35 @@
 :root {
-  --color-bg: #f5f6f8;
+  --color-bg: #faf6f2;
   --color-surface: #ffffff;
   --color-border: #d9dce1;
   --color-text: #1f2430;
   --color-muted: #4b5563;
-  --color-primary: #3f6b52;
-  --color-primary-dark: #2f5140;
+  --color-primary: #a8553a;
+  --color-primary-dark: #874330;
   --color-danger: #b3261e;
   --color-success: #2f6b3f;
   --radius: 8px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Nunito Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: var(--font-body);
+  font-family: var(--font-body);
   color-scheme: light dark;
 }
 
 * {
   box-sizing: border-box;
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+}
+
+h1,
+h2,
+h3,
+.navbar-brand {
+  font-family: var(--font-heading);
 }
 
 body {
@@ -32,8 +47,8 @@ body {
 .navbar {
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 12px 24px;
+  gap: 12px;
+  padding: 12px 24px 12px 12px;
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
 }
@@ -44,33 +59,65 @@ body {
   color: var(--color-primary-dark);
 }
 
-.navbar-links {
-  display: flex;
-  gap: 16px;
-  flex: 1;
-}
-
-.navbar-links a {
+.sidebar-toggle {
+  border: none;
+  border-radius: var(--radius);
+  background: none;
   color: var(--color-text);
-  text-decoration: none;
-  padding: 4px 0;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 6px 10px;
+  cursor: pointer;
 }
 
-.navbar-links a.active {
-  color: var(--color-primary);
-  font-weight: 600;
-  border-bottom: 2px solid var(--color-primary);
+.sidebar-toggle:hover {
+  background: var(--color-bg);
 }
 
 .navbar-user {
   display: flex;
   align-items: center;
   gap: 12px;
+  margin-left: auto;
   color: var(--color-muted);
+}
+
+.app-body {
+  flex: 1;
+  display: flex;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  width: 200px;
+  padding: 16px 0;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+}
+
+.sidebar a {
+  color: var(--color-text);
+  font-weight: 700;
+  text-decoration: none;
+  padding: 10px 24px;
+  border-left: 3px solid transparent;
+}
+
+.sidebar a:hover {
+  background: var(--color-bg);
+}
+
+.sidebar a.active {
+  color: var(--color-primary);
+  border-left-color: var(--color-primary);
+  background: var(--color-bg);
 }
 
 .app-content {
   flex: 1;
+  min-width: 0;
   padding: 24px;
   max-width: 1000px;
   width: 100%;
@@ -294,8 +341,8 @@ body {
     --color-border: #2c3038;
     --color-text: #e7e9ec;
     --color-muted: #9aa0a8;
-    --color-primary: #6ea985;
-    --color-primary-dark: #8fc4a4;
+    --color-primary: #d98a6c;
+    --color-primary-dark: #e8ab93;
   }
 
   .data-table th {
