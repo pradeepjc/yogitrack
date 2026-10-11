@@ -4,6 +4,7 @@ const asyncHandler = require('../utils/asyncHandler');
 const { generateCustomerId } = require('../services/idGenerator.service');
 const { sendNotification } = require('../services/notification.service');
 const { isValidEmail, isValidPhone } = require('../utils/validators');
+const { exactMatchRegex } = require('../utils/regexUtils');
 
 const REQUIRED_FIELDS = ['firstName', 'lastName', 'address', 'phone', 'email', 'preferredContact'];
 
@@ -25,11 +26,6 @@ function validateContactFields(body) {
   }
 }
 
-function exactNameRegex(value) {
-  const escaped = String(value).trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return new RegExp(`^${escaped}$`, 'i');
-}
-
 const checkDuplicate = asyncHandler(async (req, res) => {
   const { firstName, lastName } = req.query;
   if (!firstName || !lastName) {
@@ -37,8 +33,8 @@ const checkDuplicate = asyncHandler(async (req, res) => {
   }
 
   const matches = await Customer.find({
-    firstName: exactNameRegex(firstName),
-    lastName: exactNameRegex(lastName),
+    firstName: exactMatchRegex(firstName),
+    lastName: exactMatchRegex(lastName),
     isActive: true,
   }).select('customerId firstName lastName email phone');
 

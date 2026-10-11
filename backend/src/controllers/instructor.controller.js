@@ -5,6 +5,7 @@ const asyncHandler = require('../utils/asyncHandler');
 const { generateInstructorId } = require('../services/idGenerator.service');
 const { sendNotification } = require('../services/notification.service');
 const { isValidEmail, isValidPhone } = require('../utils/validators');
+const { exactMatchRegex, containsRegex } = require('../utils/regexUtils');
 
 const REQUIRED_FIELDS = ['firstName', 'lastName', 'address', 'phone', 'email', 'preferredContact'];
 
@@ -31,8 +32,8 @@ const checkDuplicate = asyncHandler(async (req, res) => {
   }
 
   const matches = await Instructor.find({
-    firstName: new RegExp(`^${firstName.trim()}$`, 'i'),
-    lastName: new RegExp(`^${lastName.trim()}$`, 'i'),
+    firstName: exactMatchRegex(firstName),
+    lastName: exactMatchRegex(lastName),
     isActive: true,
   }).select('instructorId firstName lastName email phone');
 
@@ -74,11 +75,8 @@ const listInstructors = asyncHandler(async (req, res) => {
   const { q } = req.query;
   const filter = { isActive: true };
   if (q) {
-    filter.$or = [
-      { firstName: new RegExp(q, 'i') },
-      { lastName: new RegExp(q, 'i') },
-      { instructorId: new RegExp(q, 'i') },
-    ];
+    const pattern = containsRegex(q);
+    filter.$or = [{ firstName: pattern }, { lastName: pattern }, { instructorId: pattern }];
   }
   const instructors = await Instructor.find(filter).sort({ createdAt: -1 });
   res.json(instructors);
