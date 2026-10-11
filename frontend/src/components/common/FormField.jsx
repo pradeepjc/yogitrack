@@ -1,4 +1,4 @@
-export default function FormField({ label, type = 'text', name, value, onChange, options, required, ...rest }) {
+export default function FormField({ label, type = 'text', name, value, onChange, options, required, error, ...rest }) {
   return (
     <label className="form-field">
       <span>
@@ -17,6 +17,7 @@ export default function FormField({ label, type = 'text', name, value, onChange,
       ) : (
         <input type={type} name={name} value={value} onChange={onChange} required={required} {...rest} />
       )}
+      {error && <span className="field-error">{error}</span>}
     </label>
   );
 }

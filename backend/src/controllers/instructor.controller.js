@@ -4,6 +4,7 @@ const ApiError = require('../utils/ApiError');
 const asyncHandler = require('../utils/asyncHandler');
 const { generateInstructorId } = require('../services/idGenerator.service');
 const { sendNotification } = require('../services/notification.service');
+const { isValidEmail, isValidPhone } = require('../utils/validators');
 
 const REQUIRED_FIELDS = ['firstName', 'lastName', 'address', 'phone', 'email', 'preferredContact'];
 
@@ -11,6 +12,15 @@ function validateRequiredFields(body) {
   const missing = REQUIRED_FIELDS.filter((field) => !body[field] || String(body[field]).trim() === '');
   if (missing.length > 0) {
     throw new ApiError(400, 'Missing required fields', { missing });
+  }
+}
+
+function validateContactFields(body) {
+  if (!isValidPhone(body.phone)) {
+    throw new ApiError(400, 'The phone number is invalid. Please enter a valid phone number to proceed.', { field: 'phone' });
+  }
+  if (!isValidEmail(body.email)) {
+    throw new ApiError(400, 'The email is invalid. Please enter a valid email to proceed.', { field: 'email' });
   }
 }
 
@@ -31,6 +41,7 @@ const checkDuplicate = asyncHandler(async (req, res) => {
 
 const createInstructor = asyncHandler(async (req, res) => {
   validateRequiredFields(req.body);
+  validateContactFields(req.body);
 
   const { firstName, lastName, address, phone, email, preferredContact } = req.body;
 
@@ -41,7 +52,7 @@ const createInstructor = asyncHandler(async (req, res) => {
     firstName: firstName.trim(),
     lastName: lastName.trim(),
     address,
-    phone,
+    phone: String(phone).trim(),
     email: email.toLowerCase().trim(),
     preferredContact,
   });
@@ -83,6 +94,7 @@ const getInstructor = asyncHandler(async (req, res) => {
 
 const updateInstructor = asyncHandler(async (req, res) => {
   validateRequiredFields(req.body);
+  validateContactFields(req.body);
 
   const { firstName, lastName, address, phone, email, preferredContact } = req.body;
 
@@ -92,7 +104,7 @@ const updateInstructor = asyncHandler(async (req, res) => {
       firstName: firstName.trim(),
       lastName: lastName.trim(),
       address,
-      phone,
+      phone: String(phone).trim(),
       email: email.toLowerCase().trim(),
       preferredContact,
     },

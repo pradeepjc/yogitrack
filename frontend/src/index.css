@@ -161,6 +161,11 @@ body {
   color: var(--color-danger);
 }
 
+.field-error {
+  color: var(--color-danger);
+  font-size: 0.8rem;
+}
+
 .form-error {
   color: var(--color-danger);
   margin-bottom: 12px;
