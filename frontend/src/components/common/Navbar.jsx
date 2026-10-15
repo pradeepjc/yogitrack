@@ -17,7 +17,8 @@ export default function Navbar({ sidebarOpen, onToggleSidebar }) {
       </button>
       <div className="navbar-brand">YogiTrack</div>
       <div className="navbar-user">
-        <span>{user?.username}</span>
+        {/* Instructor usernames are their ids, stored lowercase. */}
+        <span>{user?.role === 'instructor' ? user.username.toUpperCase() : user?.username}</span>
         <button type="button" className="btn btn-link" onClick={logout}>
           Log out
         </button>

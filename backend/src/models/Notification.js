@@ -8,7 +8,7 @@ const notificationSchema = new mongoose.Schema(
     messageBody: { type: String, required: true },
     relatedEntityType: {
       type: String,
-      enum: ['Instructor', 'Customer', 'ClassSchedule'],
+      enum: ['Instructor', 'Customer', 'ClassSchedule', 'CheckIn'],
     },
     relatedEntityId: { type: mongoose.Schema.Types.ObjectId },
     status: { type: String, enum: ['sent'], default: 'sent' },

@@ -1,20 +1,32 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext';
 
+const LINKS = {
+  manager: [
+    { to: '/manager/instructors', label: 'Instructors' },
+    { to: '/manager/classes', label: 'Classes' },
+    { to: '/manager/packages', label: 'Packages' },
+    { to: '/manager/customers', label: 'Customers' },
+    { to: '/manager/sales', label: 'Sales' },
+  ],
+  instructor: [{ to: '/instructor/attendance', label: 'Attendance' }],
+};
+
 export default function Sidebar() {
   const { user } = useAuth();
+  const links = LINKS[user?.role];
 
-  if (user?.role !== 'manager') {
+  if (!links) {
     return null;
   }
 
   return (
     <aside className="sidebar" id="app-sidebar">
-      <NavLink to="/manager/instructors">Instructors</NavLink>
-      <NavLink to="/manager/classes">Classes</NavLink>
-      <NavLink to="/manager/packages">Packages</NavLink>
-      <NavLink to="/manager/customers">Customers</NavLink>
-      <NavLink to="/manager/sales">Sales</NavLink>
+      {links.map((link) => (
+        <NavLink key={link.to} to={link.to}>
+          {link.label}
+        </NavLink>
+      ))}
     </aside>
   );
 }

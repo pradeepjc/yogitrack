@@ -23,6 +23,42 @@ function intervalsOverlap(startA, endA, startB, endB) {
   return startA < endB && endA > startB;
 }
 
+function partsInZone(date, timeZone, options) {
+  const parts = new Intl.DateTimeFormat('en-US', { timeZone, ...options }).formatToParts(date);
+  return Object.fromEntries(parts.map((p) => [p.type, p.value]));
+}
+
+// Day, minutes past midnight and calendar date of `date` as seen in `timeZone`.
+function zonedParts(date, timeZone) {
+  const p = partsInZone(date, timeZone, {
+    weekday: 'short',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  });
+  return {
+    dayOfWeek: p.weekday,
+    minutes: Number(p.hour) * 60 + Number(p.minute),
+    dateKey: `${p.year}-${p.month}-${p.day}`,
+  };
+}
+
+// dd/mm/yy and hh:mm am/pm in `timeZone`, as used in check-in messages.
+function formatDateTime12h(date, timeZone) {
+  const p = partsInZone(date, timeZone, {
+    year: '2-digit',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  });
+  return { date: `${p.day}/${p.month}/${p.year}`, time: `${p.hour}:${p.minute} ${p.dayPeriod.toLowerCase()}` };
+}
+
 module.exports = {
   DAYS,
   dayOfWeekFromDate,
@@ -30,4 +66,6 @@ module.exports = {
   timeToMinutes,
   minutesToTime,
   intervalsOverlap,
+  zonedParts,
+  formatDateTime12h,
 };

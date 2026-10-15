@@ -2,16 +2,13 @@ const ClassSchedule = require('../models/ClassSchedule');
 const Instructor = require('../models/Instructor');
 const ApiError = require('../utils/ApiError');
 const asyncHandler = require('../utils/asyncHandler');
-const { isValidTimeString, minutesToTime, timeToMinutes } = require('../utils/dateUtils');
+const { DAYS, isValidTimeString, minutesToTime, timeToMinutes } = require('../utils/dateUtils');
 const {
   findConflict,
   suggestAlternatives,
   DEFAULT_DURATION_MINUTES,
 } = require('../services/scheduleConflict.service');
 const { sendNotification } = require('../services/notification.service');
-
-// Display order for the schedule: Sunday through Saturday.
-const WEEK_ORDER = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 function validateClassInput(body) {
   const { instructorId, dayOfWeek, time, classType, payRate } = body;
@@ -105,11 +102,8 @@ const listClasses = asyncHandler(async (req, res) => {
     filter.instructor = instructor ? instructor._id : null;
   }
   const classes = await ClassSchedule.find(filter).populate('instructor', 'instructorId firstName lastName');
-  // Day names don't sort in week order alphabetically, so order them here.
-  classes.sort(
-    (a, b) =>
-      WEEK_ORDER.indexOf(a.dayOfWeek) - WEEK_ORDER.indexOf(b.dayOfWeek) || a.time.localeCompare(b.time)
-  );
+  // Day names don't sort in week order alphabetically; DAYS runs Sunday to Saturday.
+  classes.sort((a, b) => DAYS.indexOf(a.dayOfWeek) - DAYS.indexOf(b.dayOfWeek) || a.time.localeCompare(b.time));
   res.json(classes);
 });
 

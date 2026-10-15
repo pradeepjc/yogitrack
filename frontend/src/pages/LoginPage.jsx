@@ -15,8 +15,8 @@ export default function LoginPage() {
     setError('');
     setSubmitting(true);
     try {
-      await login(username, password);
-      navigate('/manager', { replace: true });
+      const loggedInUser = await login(username, password);
+      navigate(loggedInUser.role === 'instructor' ? '/instructor' : '/manager', { replace: true });
     } catch (err) {
       setError(err?.response?.data?.message || 'Login failed');
     } finally {

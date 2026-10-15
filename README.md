@@ -1,10 +1,10 @@
 # YogiTrack
 
 Phase 1 (in progress): Manager & Instructor record-keeping for Yoga H'om studio.
-Implemented so far: **UC1 (Add Instructor)**, **UC2 (Add Class)**, **UC3 (Add Package)**, **UC4 (Add Customer)**, and **UC5a (Record a Sale)**. Attendance and reports are planned but not yet built.
+Implemented so far: **UC1 (Add Instructor)**, **UC2 (Add Class)**, **UC3 (Add Package)**, **UC4 (Add Customer)**, **UC5a (Record a Sale)**, and **UC5b (Record Class Attendance)**. Reports are planned but not yet built.
 
 ## Stack
-MongoDB + Express + React (Vite) + Node, JWT-based auth (Manager role only for now).
+MongoDB + Express + React (Vite) + Node, JWT-based auth with Manager and Instructor roles.
 
 ## Setup
 
@@ -33,7 +33,8 @@ Visit http://localhost:5173 and log in with the seeded manager credentials.
 
 ## Notes
 - Notifications (welcome messages, class-scheduled confirmations) are **mocked**: they're written to the `notifications` collection and logged to the backend console instead of being sent via a real email/SMS provider.
-- Only a `manager` role exists today; there is no separate login for instructors.
+- Instructors log in with their instructor id as both username and password (e.g. `I00003` / `I00003`). Accounts are created automatically when a manager adds an instructor; for instructors added before this existed, run `npm run accounts:instructors` in `backend` once (on Heroku: `heroku run npm run accounts:instructors --prefix backend`).
+- Attendance times are read in the studio's time zone, set by `STUDIO_TIMEZONE` (default `America/Chicago`).
 - Class scheduling assumes a single studio: only one class can run at a time (a 60-minute default duration is used for overlap checks). Conflicting submissions get alternative-slot suggestions.
 
 ## Deployment (Heroku)

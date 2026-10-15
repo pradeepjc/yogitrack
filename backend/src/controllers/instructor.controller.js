@@ -4,6 +4,7 @@ const ApiError = require('../utils/ApiError');
 const asyncHandler = require('../utils/asyncHandler');
 const { generateInstructorId } = require('../services/idGenerator.service');
 const { sendNotification } = require('../services/notification.service');
+const { ensureInstructorAccount, deactivateInstructorAccount } = require('../services/instructorAccount.service');
 const { isValidEmail, isValidPhone } = require('../utils/validators');
 const { exactMatchRegex, containsRegex } = require('../utils/regexUtils');
 
@@ -57,6 +58,8 @@ const createInstructor = asyncHandler(async (req, res) => {
     email: email.toLowerCase().trim(),
     preferredContact,
   });
+
+  await ensureInstructorAccount(instructor);
 
   const welcomeMessage = `Welcome to Yoga'Hom! We're excited to have you on board. Your instructor id is ${instructorId}.`;
   await sendNotification({
@@ -133,6 +136,8 @@ const deactivateInstructor = asyncHandler(async (req, res) => {
   if (!instructor) {
     throw new ApiError(404, 'Instructor not found');
   }
+
+  await deactivateInstructorAccount(instructor._id);
 
   res.json(instructor);
 });

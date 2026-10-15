@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import Navbar from '../../components/common/Navbar';
-import Sidebar from '../../components/common/Sidebar';
+import Navbar from '../components/common/Navbar';
+import Sidebar from '../components/common/Sidebar';
 
-export default function ManagerLayout() {
+export default function AppLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(() => window.innerWidth >= 768);
 
   return (
