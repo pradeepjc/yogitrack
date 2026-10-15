@@ -163,4 +163,4 @@ function checkInMessage(customer, attendedAt, classBalance, unlimited) {
   return `Hello ${customer.firstName}! You are checked-in for a class on ${date} at ${time}. Your class-balance is ${balance}.`;
 }
 
-module.exports = { evaluateAttendance, applyCheckIn, checkInMessage, customerName };
+module.exports = { evaluateAttendance, findEligibleSale, applyCheckIn, checkInMessage, customerName };

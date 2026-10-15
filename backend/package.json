@@ -8,7 +8,10 @@
     "dev": "nodemon server.js",
     "start": "node server.js",
     "seed": "node src/scripts/seed.js",
-    "accounts:instructors": "node src/scripts/createInstructorAccounts.js"
+    "accounts:instructors": "node src/scripts/createInstructorAccounts.js",
+    "seed:demo": "node src/scripts/seedDemoData.js",
+    "seed:demo:reset": "node src/scripts/seedDemoData.js --reset",
+    "seed:demo:remove": "node src/scripts/seedDemoData.js --remove"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

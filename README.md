@@ -18,6 +18,8 @@ cd backend
 cp .env.example .env   # defaults to port 5050 (macOS AirPlay Receiver uses 5000)
 npm install
 npm run seed            # creates the first Manager login (manager / manager123 by default)
+npm run seed:demo       # optional: adds a demo studio (instructors, classes, packages, customers, sales, ~6 weeks of attendance)
+                        # seed:demo:reset replaces it with a fresh copy; seed:demo:remove deletes it (your own data is untouched)
 npm run dev
 ```
 
