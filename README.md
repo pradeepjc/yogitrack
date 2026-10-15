@@ -33,7 +33,7 @@ Visit http://localhost:5173 and log in with the seeded manager credentials.
 
 ## Notes
 - Notifications (welcome messages, class-scheduled confirmations) are **mocked**: they're written to the `notifications` collection and logged to the backend console instead of being sent via a real email/SMS provider.
-- Instructors log in with their instructor id as both username and password (e.g. `I00003` / `I00003`). Accounts are created automatically when a manager adds an instructor; for instructors added before this existed, run `npm run accounts:instructors` in `backend` once (on Heroku: `heroku run npm run accounts:instructors --prefix backend`).
+- Instructors log in with their instructor id as both username and password (e.g. `I00003` / `I00003`). Accounts are created automatically when a manager adds an instructor; for instructors added before this existed, run `npm run accounts:instructors` in `backend` once (on Heroku: `heroku run "npm run accounts:instructors --prefix backend"`; the quotes stop the Heroku CLI treating `--prefix` as its own flag).
 - Attendance times are read in the studio's time zone, set by `STUDIO_TIMEZONE` (default `America/Chicago`).
 - Class scheduling assumes a single studio: only one class can run at a time (a 60-minute default duration is used for overlap checks). Conflicting submissions get alternative-slot suggestions.
 
@@ -58,7 +58,7 @@ This deploys as a **single Heroku app**: the Express backend serves both the API
    The root `package.json`'s `heroku-postbuild` script installs both `backend`/`frontend` dependencies and runs `vite build`; `Procfile` starts `node backend/server.js`, which serves the built frontend when `NODE_ENV=production` (set automatically by Heroku).
 4. Seed the first manager login (one-time, run against the deployed app):
    ```
-   heroku run npm run seed --prefix backend
+   heroku run "npm run seed --prefix backend"
    ```
 5. Visit `heroku open` and log in with the manager credentials you set in step 2.
 
