@@ -351,6 +351,73 @@ body {
   margin-top: 8px;
 }
 
+.report-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.report-tab {
+  border: none;
+  border-bottom: 3px solid transparent;
+  background: none;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.report-tab:hover {
+  color: var(--color-text);
+}
+
+.report-tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.report-filter {
+  max-width: 220px;
+  margin-bottom: 16px;
+}
+
+.report-summary {
+  margin: 0 0 12px;
+  font-weight: 600;
+}
+
+.report-section {
+  margin: 20px 0 8px;
+  font-size: 1rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-active {
+  background: #eaf5ec;
+  color: var(--color-success);
+}
+
+.status-future {
+  background: var(--color-bg);
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+}
+
+.status-expired {
+  background: var(--color-bg);
+  color: var(--color-muted);
+}
+
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -444,5 +511,9 @@ body {
   .success-message {
     background: #16261b;
     border-color: #234a2f;
+  }
+
+  .status-active {
+    background: #16261b;
   }
 }

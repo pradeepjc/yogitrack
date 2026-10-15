@@ -9,6 +9,7 @@ import ClassesPage from './pages/manager/ClassesPage';
 import PackagesPage from './pages/manager/PackagesPage';
 import CustomersPage from './pages/manager/CustomersPage';
 import SalesPage from './pages/manager/SalesPage';
+import ReportsPage from './pages/manager/ReportsPage';
 import AttendancePage from './pages/instructor/AttendancePage';
 
 function HomeRedirect() {
@@ -32,6 +33,7 @@ export default function AppRouter() {
             <Route path="packages" element={<PackagesPage />} />
             <Route path="customers" element={<CustomersPage />} />
             <Route path="sales" element={<SalesPage />} />
+            <Route path="reports" element={<ReportsPage />} />
           </Route>
         </Route>
         <Route element={<RoleRoute role="instructor" />}>

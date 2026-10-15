@@ -8,6 +8,7 @@ const LINKS = {
     { to: '/manager/packages', label: 'Packages' },
     { to: '/manager/customers', label: 'Customers' },
     { to: '/manager/sales', label: 'Sales' },
+    { to: '/manager/reports', label: 'Reports' },
   ],
   instructor: [{ to: '/instructor/attendance', label: 'Attendance' }],
 };
