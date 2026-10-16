@@ -66,7 +66,7 @@ export default function ContactForm({ initialValues, onSubmit, onCancel, submitL
   return (
     <form className="entity-form" onSubmit={handleSubmit} noValidate>
       {error && <p className="form-error">{error}</p>}
-      <div className="form-grid">
+      <div className="form-grid form-grid-3">
         <FormField
           label="First name"
           name="firstName"
@@ -112,7 +112,7 @@ export default function ContactForm({ initialValues, onSubmit, onCancel, submitL
           required
         />
         <FormField
-          label="Preferred mode of communication"
+          label="Preferred contact"
           type="select"
           name="preferredContact"
           value={form.preferredContact}
