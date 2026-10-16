@@ -32,7 +32,7 @@ function validate(form) {
   return errors;
 }
 
-export default function ContactForm({ initialValues, onSubmit, submitLabel = 'Save' }) {
+export default function ContactForm({ initialValues, onSubmit, onCancel, submitLabel = 'Save' }) {
   const [form, setForm] = useState(() => (initialValues ? toFormValues(initialValues) : EMPTY_FORM));
   const [error, setError] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
@@ -125,9 +125,16 @@ export default function ContactForm({ initialValues, onSubmit, submitLabel = 'Sa
           ]}
         />
       </div>
-      <button type="submit" className="btn btn-primary" disabled={submitting}>
-        {submitting ? 'Saving...' : submitLabel}
-      </button>
+      <div className="form-actions">
+        <button type="submit" className="btn btn-primary" disabled={submitting}>
+          {submitting ? 'Saving...' : submitLabel}
+        </button>
+        {onCancel && (
+          <button type="button" className="btn btn-secondary" onClick={onCancel} disabled={submitting}>
+            Cancel
+          </button>
+        )}
+      </div>
     </form>
   );
 }

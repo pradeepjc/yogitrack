@@ -5,7 +5,7 @@ const EMPTY_FORM = { instructorId: '', dayOfWeek: '', time: '', classType: '', p
 
 const DAY_OPTIONS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => ({ value: d, label: d }));
 
-export default function ClassForm({ instructors, initialValues, onSubmit, submitLabel = 'Publish Class', externalError }) {
+export default function ClassForm({ instructors, initialValues, onSubmit, submitLabel = 'Publish Class', externalError, onCancel }) {
   const [form, setForm] = useState(initialValues || EMPTY_FORM);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -76,9 +76,16 @@ export default function ClassForm({ instructors, initialValues, onSubmit, submit
           required
         />
       </div>
-      <button type="submit" className="btn btn-primary" disabled={submitting}>
-        {submitting ? 'Saving...' : submitLabel}
-      </button>
+      <div className="form-actions">
+        <button type="submit" className="btn btn-primary" disabled={submitting}>
+          {submitting ? 'Saving...' : submitLabel}
+        </button>
+        {onCancel && (
+          <button type="button" className="btn btn-secondary" onClick={onCancel} disabled={submitting}>
+            Cancel
+          </button>
+        )}
+      </div>
     </form>
   );
 }

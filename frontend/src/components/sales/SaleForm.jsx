@@ -19,7 +19,7 @@ function emptyForm() {
   };
 }
 
-export default function SaleForm({ customers, packages, onSubmit }) {
+export default function SaleForm({ customers, packages, onSubmit, onCancel }) {
   const [form, setForm] = useState(emptyForm);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -150,9 +150,16 @@ export default function SaleForm({ customers, packages, onSubmit }) {
           required
         />
       </div>
-      <button type="submit" className="btn btn-primary" disabled={submitting}>
-        {submitting ? 'Saving...' : 'Record Sale'}
-      </button>
+      <div className="form-actions">
+        <button type="submit" className="btn btn-primary" disabled={submitting}>
+          {submitting ? 'Saving...' : 'Record Sale'}
+        </button>
+        {onCancel && (
+          <button type="button" className="btn btn-secondary" onClick={onCancel} disabled={submitting}>
+            Cancel
+          </button>
+        )}
+      </div>
     </form>
   );
 }

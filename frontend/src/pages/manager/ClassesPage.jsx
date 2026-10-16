@@ -134,9 +134,11 @@ export default function ClassesPage() {
     <div className="page">
       <div className="page-header">
         <h2>Classes</h2>
-        <button type="button" className="btn btn-primary" onClick={() => (showForm ? closeForm() : setShowForm(true))}>
-          {showForm ? 'Cancel' : 'Add Class'}
-        </button>
+        {!showForm && (
+          <button type="button" className="btn btn-primary" onClick={() => setShowForm(true)}>
+            Add Class
+          </button>
+        )}
       </div>
 
       {successMessage && <p className="success-message">{successMessage}</p>}
@@ -153,6 +155,7 @@ export default function ClassesPage() {
           instructors={instructors}
           initialValues={editing ? toFormValues(editing) : undefined}
           onSubmit={handleSubmit}
+          onCancel={closeForm}
           submitLabel={editing ? 'Save Changes' : 'Publish Class'}
           externalError={formError}
         />

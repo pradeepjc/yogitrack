@@ -11,7 +11,7 @@ const EMPTY_FORM = {
   price: '',
 };
 
-export default function PackageForm({ initialValues, onSubmit, submitLabel = 'Save Package' }) {
+export default function PackageForm({ initialValues, onSubmit, onCancel, submitLabel = 'Save Package' }) {
   const [form, setForm] = useState(initialValues || EMPTY_FORM);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -97,9 +97,16 @@ export default function PackageForm({ initialValues, onSubmit, submitLabel = 'Sa
           required
         />
       </div>
-      <button type="submit" className="btn btn-primary" disabled={submitting}>
-        {submitting ? 'Saving...' : submitLabel}
-      </button>
+      <div className="form-actions">
+        <button type="submit" className="btn btn-primary" disabled={submitting}>
+          {submitting ? 'Saving...' : submitLabel}
+        </button>
+        {onCancel && (
+          <button type="button" className="btn btn-secondary" onClick={onCancel} disabled={submitting}>
+            Cancel
+          </button>
+        )}
+      </div>
     </form>
   );
 }

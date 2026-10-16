@@ -98,9 +98,11 @@ export default function InstructorsPage() {
     <div className="page">
       <div className="page-header">
         <h2>Instructors</h2>
-        <button type="button" className="btn btn-primary" onClick={() => (showForm ? closeForm() : setShowForm(true))}>
-          {showForm ? 'Cancel' : 'Add Instructor'}
-        </button>
+        {!showForm && (
+          <button type="button" className="btn btn-primary" onClick={() => setShowForm(true)}>
+            Add Instructor
+          </button>
+        )}
       </div>
 
       {successMessage && <p className="success-message">{successMessage}</p>}
@@ -112,6 +114,7 @@ export default function InstructorsPage() {
           key={editing?._id || 'new'}
           initialValues={editing}
           onSubmit={handleSubmit}
+          onCancel={closeForm}
           submitLabel={editing ? 'Save Changes' : 'Save Instructor'}
         />
       )}

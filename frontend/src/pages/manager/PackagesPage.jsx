@@ -93,9 +93,11 @@ export default function PackagesPage() {
     <div className="page">
       <div className="page-header">
         <h2>Packages</h2>
-        <button type="button" className="btn btn-primary" onClick={() => (showForm ? closeForm() : setShowForm(true))}>
-          {showForm ? 'Cancel' : 'Add Package'}
-        </button>
+        {!showForm && (
+          <button type="button" className="btn btn-primary" onClick={() => setShowForm(true)}>
+            Add Package
+          </button>
+        )}
       </div>
 
       {successMessage && <p className="success-message">{successMessage}</p>}
@@ -107,6 +109,7 @@ export default function PackagesPage() {
           key={editing?._id || 'new'}
           initialValues={editing ? toFormValues(editing) : undefined}
           onSubmit={handleSubmit}
+          onCancel={closeForm}
           submitLabel={editing ? 'Save Changes' : 'Save Package'}
         />
       )}

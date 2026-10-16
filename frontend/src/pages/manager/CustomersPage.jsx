@@ -108,9 +108,11 @@ export default function CustomersPage() {
     <div className="page">
       <div className="page-header">
         <h2>Customers</h2>
-        <button type="button" className="btn btn-primary" onClick={() => (showForm ? closeForm() : setShowForm(true))}>
-          {showForm ? 'Cancel' : 'Add Customer'}
-        </button>
+        {!showForm && (
+          <button type="button" className="btn btn-primary" onClick={() => setShowForm(true)}>
+            Add Customer
+          </button>
+        )}
       </div>
 
       {successMessage && <p className="success-message">{successMessage}</p>}
@@ -122,6 +124,7 @@ export default function CustomersPage() {
           key={editing?._id || 'new'}
           initialValues={editing}
           onSubmit={handleSubmit}
+          onCancel={closeForm}
           submitLabel={editing ? 'Save Changes' : 'Save Customer'}
         />
       )}

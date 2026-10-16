@@ -58,14 +58,16 @@ export default function SalesPage() {
     <div className="page">
       <div className="page-header">
         <h2>Sales</h2>
-        <button type="button" className="btn btn-primary" onClick={() => setShowForm((v) => !v)}>
-          {showForm ? 'Cancel' : 'Record Sale'}
-        </button>
+        {!showForm && (
+          <button type="button" className="btn btn-primary" onClick={() => setShowForm(true)}>
+            Record Sale
+          </button>
+        )}
       </div>
 
       {successMessage && <p className="success-message">{successMessage}</p>}
 
-      {showForm && <SaleForm customers={customers} packages={packages} onSubmit={handleSubmit} />}
+      {showForm && <SaleForm customers={customers} packages={packages} onSubmit={handleSubmit} onCancel={() => setShowForm(false)} />}
 
       <DataTable columns={COLUMNS} rows={sales} emptyMessage="No sales recorded yet." />
     </div>
